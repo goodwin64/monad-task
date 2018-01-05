@@ -1,6 +1,9 @@
 const assert = require('assert');
 const canReach = require('./src/index.js');
-const { getMatrixPositionFromChess } = require('./src/helpers.js');
+const {
+    getMatrixPositionFromChess,
+    getChessPositionFromMatrix,
+} = require('./src/helpers.js');
 
 it('should return true if position is reachable', () => {
     assert.equal(canReach([6, 2], [8, 1], 1), true);
@@ -32,5 +35,26 @@ it('should parse chess position notation to array: [1; 1] (board size=8)', () =>
     assert.deepEqual(
         getMatrixPositionFromChess([1, 1]),
         [7, 0],
+    );
+});
+
+it('should parse matrix position notation to chess: [6; 2]', () => {
+    assert.deepEqual(
+        getChessPositionFromMatrix([6, 5]),
+        [6, 2],
+    );
+});
+
+it('should parse matrix position notation to chess: [1; 1] (board size=3)', () => {
+    assert.deepEqual(
+        getChessPositionFromMatrix([2, 0], 3),
+        [1, 1],
+    );
+});
+
+it('should parse matrix position notation to chess: [1; 1] (board size=8)', () => {
+    assert.deepEqual(
+        getChessPositionFromMatrix([7, 0]),
+        [1, 1],
     );
 });
