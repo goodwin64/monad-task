@@ -22,7 +22,39 @@ function getChessPositionFromMatrix(matrixPosition, boardSize = 8) {
     ];
 }
 
+/**
+ * [2, 4] -> "2;4"
+ */
+function getPrimitiveCoordinate([y, x]) {
+    return `${y};${x}`;
+}
+
+function getAllCellsInOneStep(coord, min = 0, max = 7) {
+    const [y, x] = coord.split(';').map(Number);
+    const longStep = 2;
+    const shortStep = 1;
+    return [
+        [y - longStep, x - shortStep],
+        [y - longStep, x + shortStep],
+        [y - shortStep, x + longStep],
+        [y + shortStep, x + longStep],
+        [y + longStep, x + shortStep],
+        [y + longStep, x - shortStep],
+        [y + shortStep, x - longStep],
+        [y - shortStep, x - longStep],
+    ]
+        .filter(([y, x]) =>
+            y >= min &&
+            x >= min &&
+            y <= max &&
+            x <= max
+        )
+        .map(getPrimitiveCoordinate);
+}
+
 module.exports = {
     getMatrixPositionFromChess,
     getChessPositionFromMatrix,
+    getPrimitiveCoordinate,
+    getAllCellsInOneStep,
 };
